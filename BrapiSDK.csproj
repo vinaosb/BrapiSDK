@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+		<Version>1.0.0</Version>
+		<Authors>Vinicius Schwinden Berkenbrock</Authors>
+		<Product>Brapi SDK</Product>
+		<Description>
+			This client library enables working with the brapi API so that you can access Financial Markets data in Brazil.
+			brapi API Reference - https://brapi.dev/docs
+		</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
