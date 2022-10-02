@@ -1,28 +1,21 @@
 ﻿using BrapiSDK.DTO;
-using Microsoft.AspNetCore.WebUtilities;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Net.Http.Json;
-using System.Text;
-using System.Web;
-using System.Xml.XPath;
 
 namespace BrapiSDK;
 public class BrapiClient : IDisposable
 {
-	HttpClient HttpClient { get; }
+	private HttpClient HttpClient { get; }
 	public BrapiClient()
 	{
-		HttpClient = new HttpClient();
-		HttpClient.BaseAddress = new Uri("https://brapi.dev/api/");
+		HttpClient = new HttpClient
+		{
+			BaseAddress = new Uri("https://brapi.dev/api/")
+		};
 	}
 
 	public async Task<AvailableCoinsResultMessage> GetAvailableCoins(string search = "")
 	{
-		var uri = "v2/crypto/available";
-		var query = new Dictionary<string, string>()
+		string uri = "v2/crypto/available";
+		Dictionary<string, string> query = new()
 		{
 			["search"] = search
 		};
@@ -31,19 +24,19 @@ public class BrapiClient : IDisposable
 
 	public async Task<AvailableTickerResultMessage> GetAvailableTicker(string search = "")
 	{
-		var uri = "available";
-		var query = new Dictionary<string, string>()
+		string uri = "available";
+		Dictionary<string, string> query = new()
 		{
 			["search"] = search
 		};
-		
+
 		return await HttpClient.GetFromJsonWithQueryStringAsync<AvailableTickerResultMessage>(uri, query);
 	}
-	
+
 	public async Task<CurrencyConversionAvailableResultMessage> GetAvailableCurrencyConversions(string currency = "")
 	{
-		var uri = "v2/currency/available";
-		var query = new Dictionary<string, string>()
+		string uri = "v2/currency/available";
+		Dictionary<string, string> query = new()
 		{
 			["currency"] = currency
 		};
@@ -57,8 +50,8 @@ public class BrapiClient : IDisposable
 			throw new ArgumentException($"'{nameof(coins)}' cannot be null nor whitespace.", nameof(coins));
 		}
 
-		var uri = "v2/crypto";
-		var query = new Dictionary<string, string>()
+		string uri = "v2/crypto";
+		Dictionary<string, string> query = new()
 		{
 			["coin"] = coins,
 			["currency"] = currency
@@ -73,15 +66,23 @@ public class BrapiClient : IDisposable
 		bool fundamental = false)
 	{
 		if (string.IsNullOrEmpty(tickers))
+		{
 			throw new ArgumentException($"'{nameof(tickers)}' cannot be null nor whitespace.", nameof(tickers));
-		if (!Range.IsValid(range))
-			throw new ArgumentException($"'{nameof(range)}' is invalid, check class Range.", nameof(range));
-		if (!Range.IsValid(interval))
-			throw new ArgumentException($"'{nameof(interval)}' is invalid, check class Range.", nameof(interval));
+		}
 
-		var uri = $"quote/{tickers}";
-		
-		var query = new Dictionary<string, string>()
+		if (!Range.IsValid(range))
+		{
+			throw new ArgumentException($"'{nameof(range)}' is invalid, check class Range.", nameof(range));
+		}
+
+		if (!Range.IsValid(interval))
+		{
+			throw new ArgumentException($"'{nameof(interval)}' is invalid, check class Range.", nameof(interval));
+		}
+
+		string uri = $"quote/{tickers}";
+
+		Dictionary<string, string> query = new()
 		{
 			["range"] = range,
 			["interval"] = interval,
@@ -96,12 +97,17 @@ public class BrapiClient : IDisposable
 		uint limit = 0)
 	{
 		if (!SortBy.IsValid(sortBy))
+		{
 			throw new ArgumentException($"'{nameof(sortBy)}' is invalid, check class SortBy.", nameof(sortBy));
-		if (!SortOrder.IsValid(sortOrder))
-			throw new ArgumentException($"'{nameof(sortOrder)}' is invalid, check class SortOrder.", nameof(sortOrder));
+		}
 
-		var uri = "quote/list";
-		var query = new Dictionary<string, string>()
+		if (!SortOrder.IsValid(sortOrder))
+		{
+			throw new ArgumentException($"'{nameof(sortOrder)}' is invalid, check class SortOrder.", nameof(sortOrder));
+		}
+
+		string uri = "quote/list";
+		Dictionary<string, string> query = new()
 		{
 			["sortBy"] = sortBy,
 			["sortOrder"] = sortOrder,
@@ -117,8 +123,8 @@ public class BrapiClient : IDisposable
 			throw new ArgumentException($"'{nameof(currency)}' cannot be null nor whitespace.", nameof(currency));
 		}
 
-		var uri = "v2/currency";
-		var query = new Dictionary<string, string>()
+		string uri = "v2/currency";
+		Dictionary<string, string> query = new()
 		{
 			["currency"] = currency
 		};
@@ -128,13 +134,13 @@ public class BrapiClient : IDisposable
 	public async Task<IEnumerable<(string symbol, string name)>> GetAllCyrrencies()
 	{
 		List<(string symbol, string name)> currencies = new();
-		using var client = new HttpClient();
+		using HttpClient client = new();
 		client.BaseAddress = new Uri("https://economia.awesomeapi.com.br/json/available/uniq");
-		var result = await client.GetStringAsync("");
-		var splits = result.Split(",");
-		foreach (var split in splits)
+		string result = await client.GetStringAsync("");
+		string[] splits = result.Split(",");
+		foreach (string split in splits)
 		{
-			var currencyString = split.Replace("{", String.Empty).Replace("}", String.Empty).Replace("\"", String.Empty);
+			string currencyString = split.Replace("{", string.Empty).Replace("}", string.Empty).Replace("\"", string.Empty);
 
 			(string symbol, string name) currency = new() { name = currencyString.Split(":")[1], symbol = currencyString.Split(":")[0] };
 

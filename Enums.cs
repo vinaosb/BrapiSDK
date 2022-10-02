@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BrapiSDK
+﻿namespace BrapiSDK
 {
 	public static class Range
 	{
@@ -44,7 +37,7 @@ namespace BrapiSDK
 			return sortBy == None || sortBy == Name || sortBy == Close || sortBy == Change || sortBy == ChangeAbs || sortBy == Volume || sortBy == MarketCapBasic || sortBy == Sector;
 		}
 	}
-	
+
 	public static class SortOrder
 	{
 		public static string None = "";
