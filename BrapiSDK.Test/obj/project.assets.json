@@ -1882,7 +1882,7 @@
           "build/netcoreapp2.1/xunit.runner.visualstudio.props": {}
         }
       },
-      "BrapiSDK/1.0.0": {
+      "BrapiSDK/1.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -6302,7 +6302,7 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "BrapiSDK/1.0.0": {
+    "BrapiSDK/1.0.1": {
       "type": "project",
       "path": "../BrapiSDK/BrapiSDK.csproj",
       "msbuildProject": "../BrapiSDK/BrapiSDK.csproj"
@@ -6310,7 +6310,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "BrapiSDK >= 1.0.0",
+      "BrapiSDK >= 1.0.1",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.1",
